@@ -34,20 +34,19 @@ class _SearchBarTutState extends State<SearchBarTut> {
     // Use MediaQuery to get screen size
     final screenSize = MediaQuery.of(context).size;
     double containerWidth = screenSize.width; // 90% of screen width
-    double containerHeight = kIsWeb?80:70; // Fixed height for uniformity
-    double fontSize = screenSize.width < 600 ? 16 : 20; // Font size based on width
-    double iconSize = screenSize.width < 600 ? 24 : 30; // Icon size based on width
+    double containerHeight = kIsWeb ? 80 : 70; // Fixed height for uniformity
+    double fontSize =
+        screenSize.width < 600 ? 16 : 20; // Font size based on width
+    double iconSize =
+        screenSize.width < 600 ? 24 : 30; // Icon size based on width
 
     return Container(
       alignment: Alignment.center,
       width: containerWidth,
       height: containerHeight,
       padding: const EdgeInsets.symmetric(horizontal: 20),
-
       decoration: BoxDecoration(
-        color: Colors.white,
-          borderRadius: BorderRadius.circular(10)
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -59,7 +58,8 @@ class _SearchBarTutState extends State<SearchBarTut> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MakingList(str: widget.searchController.text),
+                    builder: (context) =>
+                        MakingList(str: widget.searchController.text),
                   ),
                 );
               }
@@ -70,6 +70,19 @@ class _SearchBarTutState extends State<SearchBarTut> {
           Expanded(
             child: TextField(
               controller: widget.searchController,
+              onSubmitted: (value) {
+                if (value.replaceAll(" ", "") == "") {
+                  debugPrint('blank');
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MakingList(str: value),
+                    ),
+                  );
+                }
+              },
+              style: TextStyle(fontFamily: 'Funky02', fontSize: fontSize),
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: 'Search Recipes... $c',
